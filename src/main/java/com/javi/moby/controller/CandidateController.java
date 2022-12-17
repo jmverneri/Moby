@@ -8,6 +8,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -24,10 +25,10 @@ public class CandidateController {
         return iCandidateService.listCandidates();
     }
 
-    /*@PostMapping
-    public ResponseEntity<Candidate> saveCandidate(@RequestBody Candidate candidate){
-        return new ResponseEntity<Candidate>(iCandidateService, HttpStatus.CREATED);
-    }*/
+    @PostMapping("/add")
+    public Candidate saveCandidate(@RequestBody Candidate candidate){
+        return iCandidateService.saveCandidate(candidate);
+    }
 
     @GetMapping("/get-candidate/{id}")
     public ResponseEntity<Candidate> getCandidateById(@PathVariable("id") Long id){
@@ -41,5 +42,17 @@ public class CandidateController {
             return true;
         }
         return false;
+    }
+
+    @PutMapping("/update/{id}")
+    public Candidate updateCandidate(@PathVariable("id") Long id, @RequestBody Map<String, String> body){
+        Candidate current = iCandidateService.fetchCandidateById(id);
+        current.getFirstName(body.get("firstName"));
+        current.getFirstName(body.get("surname"));
+        current.getFirstName(body.get("identityType"));
+        current.getFirstName(body.get("idNumber"));
+        current.getFirstName(body.get("birthDate"));
+        iCandidateService.saveCandidate(current);
+        return current;
     }
 }

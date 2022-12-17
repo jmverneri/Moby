@@ -32,8 +32,8 @@ public class Candidate {
         this.idCandidate = idCandidate;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstName(String firstName) {
+        return this.firstName;
     }
 
     public void setFirstName(String firstName) {
