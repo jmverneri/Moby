@@ -4,9 +4,11 @@ import com.javi.moby.entity.Candidate;
 import com.javi.moby.entity.Technology;
 import com.javi.moby.exception.ResourceNotFoundEx;
 import com.javi.moby.repository.ITechnologyRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TechnologyServiceImpl implements ITechnologyService{
 
     private ITechnologyRepository repository;

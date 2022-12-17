@@ -20,11 +20,11 @@ public class TechnologyController {
     }
 
     @GetMapping("technologies")
-    public List<Technology> listCandidates(){
+    public List<Technology> listTechnologies(){
         return iTechnologyService.listTechnologies();
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add-technology")
     public Technology saveTechnology(@RequestBody Technology technology){
         return iTechnologyService.saveTechnology(technology);
     }
@@ -43,8 +43,8 @@ public class TechnologyController {
         return false;
     }
 
-    @PutMapping("/update/{id}")
-    public Technology updateCandidate(@PathVariable("id") Long id, @RequestBody Map<String, String> body){
+    @PutMapping("/update-technology/{id}")
+    public Technology updateTechnology(@PathVariable("id") Long id, @RequestBody Map<String, String> body){
         Technology current = iTechnologyService.fetchTechnologyById(id);
         current.getName(body.get("tecName"));
         current.getVersion(body.get("version"));

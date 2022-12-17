@@ -25,7 +25,7 @@ public class CandidateController {
         return iCandidateService.listCandidates();
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add-candidate")
     public Candidate saveCandidate(@RequestBody Candidate candidate){
         return iCandidateService.saveCandidate(candidate);
     }
@@ -44,7 +44,7 @@ public class CandidateController {
         return false;
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update-candidate/{id}")
     public Candidate updateCandidate(@PathVariable("id") Long id, @RequestBody Map<String, String> body){
         Candidate current = iCandidateService.fetchCandidateById(id);
         current.getFirstName(body.get("firstName"));
