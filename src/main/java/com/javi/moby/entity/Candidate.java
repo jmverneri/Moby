@@ -1,8 +1,11 @@
 package com.javi.moby.entity;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="candidate")
@@ -11,15 +14,25 @@ public class Candidate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCandidate;
     @Column(name = "first_name")
+    @NotEmpty(message = "You have to complete your name")
     private String firstName;
     @Column(name = "surname")
+    @NotEmpty(message = "You have to complete your surname")
     private String surname;
     @Column(name = "identity_type")
     private String identityType;
     @Column(name = "id_number")
     private String idNumber;
     @Column(name = "birth_date")
+    @DateTimeFormat( pattern="yyyy-MM-dd")
     private Date birthDate;
+
+    @ManyToMany
+    @JoinTable(name = "candidate_x_tec",
+            joinColumns = @JoinColumn(name = "id_candidate"),
+            inverseJoinColumns = @JoinColumn(name = "technology_id")
+    )
+    private List<Technology> technologyList;
 
     public Candidate() {
     }
@@ -81,6 +94,7 @@ public class Candidate {
                 ", identityType='" + identityType + '\'' +
                 ", idNumber='" + idNumber + '\'' +
                 ", birthDate=" + birthDate +
+                ", technologyList=" + technologyList +
                 '}';
     }
 }

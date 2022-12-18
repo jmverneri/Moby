@@ -1,8 +1,7 @@
 package com.javi.moby.service;
 
-import com.javi.moby.entity.Candidate;
 import com.javi.moby.entity.Technology;
-import com.javi.moby.exception.ResourceNotFoundEx;
+import com.javi.moby.exception.ResourceNotFoundException;
 import com.javi.moby.repository.ITechnologyRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,9 @@ public class TechnologyServiceImpl implements ITechnologyService{
 
     @Override
     public Technology fetchTechnologyById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundEx("Technology", "Id", id));
+        if(repository.findById(id).isEmpty())
+            throw new ResourceNotFoundException("The technology can not be found by the Id provided");
+        return repository.findById(id).get();
     }
 
     @Override

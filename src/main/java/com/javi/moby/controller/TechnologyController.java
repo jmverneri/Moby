@@ -1,12 +1,15 @@
 package com.javi.moby.controller;
 
 
+import com.javi.moby.entity.Candidate;
 import com.javi.moby.entity.Technology;
 import com.javi.moby.service.ITechnologyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,7 +28,7 @@ public class TechnologyController {
     }
 
     @PostMapping("/add-technology")
-    public Technology saveTechnology(@RequestBody Technology technology){
+    public Technology saveTechnology(@Valid @RequestBody Technology technology){
         return iTechnologyService.saveTechnology(technology);
     }
 
@@ -51,4 +54,15 @@ public class TechnologyController {
         iTechnologyService.saveTechnology(current);
         return current;
     }
+
+    /*@GetMapping("/{name}/candidates")
+    public ResponseEntity<Collection<Candidate>> listCandidatesByTec(@PathVariable("name") String techName){
+        Technology technology = iTechnologyService.fetchTechnologyByName(techName);
+        if(technology != null){
+            return new ResponseEntity<>(technology.getCandidateList(), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }*/
 }

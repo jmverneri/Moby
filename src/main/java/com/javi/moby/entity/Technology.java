@@ -2,6 +2,9 @@ package com.javi.moby.entity;
 
 import jakarta.persistence.*;
 
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
+
 @Entity
 @Table(name="technology")
 public class Technology {
@@ -9,8 +12,15 @@ public class Technology {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long technologyId;
     @Column(name = "tec_name")
+    @NotEmpty
     private String tecName;
     private String version;
+    @ManyToMany
+    @JoinTable(name = "candidate_x_tec",
+            joinColumns = @JoinColumn(name = "technology_id"),
+            inverseJoinColumns = @JoinColumn(name = "id_candidate")
+    )
+    private List<Candidate> candidateList;
 
     public Technology() {
     }
@@ -39,11 +49,19 @@ public class Technology {
         this.version = version;
     }
 
+    public List<Candidate> getCandidateList() {
+        return candidateList;
+    }
+
+    public void setCandidateList(List<Candidate> candidateList) {
+        this.candidateList = candidateList;
+    }
+
     @Override
     public String toString() {
         return "Technology{" +
                 "technologyId=" + technologyId +
-                ", name='" + tecName + '\'' +
+                ", tecName='" + tecName + '\'' +
                 ", version='" + version + '\'' +
                 '}';
     }

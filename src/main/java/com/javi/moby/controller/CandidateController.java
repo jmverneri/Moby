@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class CandidateController {
     }
 
     @PostMapping("/add-candidate")
-    public Candidate saveCandidate(@RequestBody Candidate candidate){
+    public Candidate saveCandidate(@Valid @RequestBody Candidate candidate){
         return iCandidateService.saveCandidate(candidate);
     }
 

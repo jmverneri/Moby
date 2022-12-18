@@ -1,7 +1,7 @@
 package com.javi.moby.service;
 
 import com.javi.moby.entity.Candidate;
-import com.javi.moby.exception.ResourceNotFoundEx;
+import com.javi.moby.exception.ResourceNotFoundException;
 import com.javi.moby.repository.ICandidateRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,9 @@ public class CandidateServiceImpl implements ICandidateService{
 
     @Override
     public Candidate fetchCandidateById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundEx("Candidate", "Id", id));
+        if(repository.findById(id).isEmpty())
+            throw new ResourceNotFoundException("The candidate can not be found by the Id provided");
+        return repository.findById(id).get();
     }
 
     @Override
