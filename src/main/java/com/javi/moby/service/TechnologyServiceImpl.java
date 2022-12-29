@@ -3,10 +3,12 @@ package com.javi.moby.service;
 import com.javi.moby.entity.Technology;
 import com.javi.moby.exception.ResourceNotFoundException;
 import com.javi.moby.repository.ITechnologyRepository;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Log
 @Service
 public class TechnologyServiceImpl implements ITechnologyService{
 
@@ -25,7 +27,9 @@ public class TechnologyServiceImpl implements ITechnologyService{
 
     @Override
     public Technology saveTechnology(Technology technology) {
-        return repository.save(technology);
+        Technology toSave = repository.save(technology);
+        log.info("The technology has been successfully saved");
+        return toSave;
     }
 
     @Override
@@ -36,5 +40,6 @@ public class TechnologyServiceImpl implements ITechnologyService{
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
+        log.info("The technology has been successfully deleted");
     }
 }

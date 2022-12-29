@@ -3,10 +3,12 @@ package com.javi.moby.service;
 import com.javi.moby.entity.Candidate;
 import com.javi.moby.exception.ResourceNotFoundException;
 import com.javi.moby.repository.ICandidateRepository;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Log
 @Service
 public class CandidateServiceImpl implements ICandidateService{
 
@@ -25,7 +27,9 @@ public class CandidateServiceImpl implements ICandidateService{
 
     @Override
     public Candidate saveCandidate(Candidate candidate) {
-        return repository.save(candidate);
+        Candidate toSave= repository.save(candidate);
+        log.info("The candidate has been successfully saved");
+        return toSave;
     }
 
     @Override
@@ -36,5 +40,6 @@ public class CandidateServiceImpl implements ICandidateService{
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
+        log.info("The candidate has been successfully deleted");
     }
 }

@@ -1,36 +1,38 @@
 package com.javi.moby.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="technology")
 public class Technology {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long technologyId;
+    @Column(name = "id_technology")
+    private Long idTechnology;
     @Column(name = "tec_name")
     @NotEmpty
     private String tecName;
     private String version;
-    @ManyToMany
-    @JoinTable(name = "candidate_x_tec",
-            joinColumns = @JoinColumn(name = "technology_id"),
-            inverseJoinColumns = @JoinColumn(name = "id_candidate")
-    )
-    private List<Candidate> candidateList;
+    @OneToMany(mappedBy = "technology")
+    List<CandidateXTechnology> candidateXTechnologies;
 
-    public Technology() {
+    public Long getIdTechnology() {
+        return idTechnology;
     }
 
-    public Long getTechnologyId() {
-        return technologyId;
-    }
-
-    public void setTechnologyId(Long technologyId) {
-        this.technologyId = technologyId;
+    public void setIdTechnology(Long technologyId) {
+        this.idTechnology = technologyId;
     }
 
     public String getName(String tecName) {
@@ -49,18 +51,10 @@ public class Technology {
         this.version = version;
     }
 
-    public List<Candidate> getCandidateList() {
-        return candidateList;
-    }
-
-    public void setCandidateList(List<Candidate> candidateList) {
-        this.candidateList = candidateList;
-    }
-
     @Override
     public String toString() {
         return "Technology{" +
-                "technologyId=" + technologyId +
+                "technologyId=" + idTechnology +
                 ", tecName='" + tecName + '\'' +
                 ", version='" + version + '\'' +
                 '}';

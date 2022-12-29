@@ -1,6 +1,10 @@
 package com.javi.moby.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
@@ -8,10 +12,15 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="candidate")
 public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_candidate")
     private Long idCandidate;
     @Column(name = "first_name")
     @NotEmpty(message = "You have to complete your name")
@@ -27,15 +36,8 @@ public class Candidate {
     @DateTimeFormat( pattern="yyyy-MM-dd")
     private Date birthDate;
 
-    @ManyToMany
-    @JoinTable(name = "candidate_x_tec",
-            joinColumns = @JoinColumn(name = "id_candidate"),
-            inverseJoinColumns = @JoinColumn(name = "technology_id")
-    )
-    private List<Technology> technologyList;
-
-    public Candidate() {
-    }
+    @OneToMany(mappedBy = "candidate")
+    List<CandidateXTechnology> candidateXTechnologies;
 
     public Long getIdCandidate() {
         return idCandidate;
@@ -94,7 +96,7 @@ public class Candidate {
                 ", identityType='" + identityType + '\'' +
                 ", idNumber='" + idNumber + '\'' +
                 ", birthDate=" + birthDate +
-                ", technologyList=" + technologyList +
+                ", candidateXTechnologies=" + candidateXTechnologies +
                 '}';
     }
 }
