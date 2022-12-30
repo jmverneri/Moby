@@ -1,5 +1,6 @@
 package com.javi.moby.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 @Entity
 @Data
@@ -24,8 +24,6 @@ public class Technology {
     @NotEmpty
     private String tecName;
     private String version;
-    @OneToMany(mappedBy = "technology")
-    List<CandidateXTechnology> candidateXTechnologies;
 
     public Long getIdTechnology() {
         return idTechnology;

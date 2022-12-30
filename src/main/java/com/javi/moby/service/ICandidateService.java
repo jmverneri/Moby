@@ -1,7 +1,6 @@
 package com.javi.moby.service;
 
 import com.javi.moby.entity.Candidate;
-
 import java.util.List;
 
 public interface ICandidateService {

@@ -6,10 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -35,9 +33,6 @@ public class Candidate {
     @Column(name = "birth_date")
     @DateTimeFormat( pattern="yyyy-MM-dd")
     private Date birthDate;
-
-    @OneToMany(mappedBy = "candidate")
-    List<CandidateXTechnology> candidateXTechnologies;
 
     public Long getIdCandidate() {
         return idCandidate;
@@ -96,7 +91,6 @@ public class Candidate {
                 ", identityType='" + identityType + '\'' +
                 ", idNumber='" + idNumber + '\'' +
                 ", birthDate=" + birthDate +
-                ", candidateXTechnologies=" + candidateXTechnologies +
                 '}';
     }
 }

@@ -1,8 +1,9 @@
-package com.javi.moby.service;
+package com.javi.moby.service.impl;
 
 import com.javi.moby.entity.Technology;
-import com.javi.moby.exception.ResourceNotFoundException;
+import com.javi.moby.exception.TechnologyAlreadyExistsException;
 import com.javi.moby.repository.ITechnologyRepository;
+import com.javi.moby.service.ITechnologyService;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Log
 @Service
-public class TechnologyServiceImpl implements ITechnologyService{
+public class TechnologyServiceImpl implements ITechnologyService {
 
     private ITechnologyRepository repository;
 
@@ -21,7 +22,7 @@ public class TechnologyServiceImpl implements ITechnologyService{
     @Override
     public Technology fetchTechnologyById(Long id) {
         if(repository.findById(id).isEmpty())
-            throw new ResourceNotFoundException("The technology can not be found by the Id provided");
+            throw new TechnologyAlreadyExistsException();
         return repository.findById(id).get();
     }
 

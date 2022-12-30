@@ -1,5 +1,6 @@
 package com.javi.moby.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,17 +14,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "candidate_x_tec")
 public class CandidateXTechnology {
-    @EmbeddedId
+    @Id
     @Column(name = "id_candidate_x_tec")
-    CandidateXTechnologyKey idCandidateXTechnology;
+    Long idCandidateXTechnology;
 
     @ManyToOne
-    @MapsId("idCandidate")
     @JoinColumn(name = "id_candidate")
+    @JsonIgnore
     private Candidate candidate;
 
     @ManyToOne
-    @MapsId("idTechnology")
     @JoinColumn(name = "id_technology")
     private Technology technology;
 
