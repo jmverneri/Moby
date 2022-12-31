@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "candidate_x_tec")
 public class CandidateXTechnology {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_candidate_x_tec")
     Long idCandidateXTechnology;
 

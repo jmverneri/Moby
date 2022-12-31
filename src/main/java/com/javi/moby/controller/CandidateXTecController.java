@@ -4,15 +4,13 @@ import com.javi.moby.entity.Candidate;
 import com.javi.moby.entity.CandidateXTechnology;
 import com.javi.moby.service.ICandidateXTecService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/api/candidate-x-tec")
 public class CandidateXTecController {
 
     private ICandidateXTecService candidateXTecService;

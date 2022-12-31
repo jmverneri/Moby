@@ -1,6 +1,8 @@
 package com.javi.moby.service;
 
 import com.javi.moby.entity.Candidate;
+import com.javi.moby.entity.CandidateXTechnology;
+
 import java.util.List;
 
 public interface ICandidateService {
@@ -11,4 +13,8 @@ public interface ICandidateService {
     List<Candidate> listCandidates();
 
     void deleteById(Long id);
+
+    List<CandidateXTechnology> listCandidatesByTec(String name);
+
+    Candidate searchCandidateByIdNumber(String dni);
 }

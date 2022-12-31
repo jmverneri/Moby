@@ -1,6 +1,6 @@
 package com.javi.moby.security;
 
-/*import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,9 +18,11 @@ public class WebSecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager auth) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2/**"))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/h2/**").permitAll()
                         .anyRequest().authenticated())
+                .headers(headers -> headers.frameOptions().sameOrigin())
                 .httpBasic()
                 .and()
                 .sessionManagement()
@@ -33,7 +35,7 @@ public class WebSecurityConfig {
     UserDetailsService userDetailsService(){
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("admin")
-                .password("admin")
+                .password(passwordEncoder().encode("admin"))
                 .roles("user", "admin")
                 .build());
         return manager;
@@ -52,4 +54,4 @@ public class WebSecurityConfig {
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-}*/
+}

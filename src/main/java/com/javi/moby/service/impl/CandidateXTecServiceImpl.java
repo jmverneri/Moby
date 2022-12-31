@@ -30,6 +30,6 @@ public class CandidateXTecServiceImpl implements ICandidateXTecService {
 
     @Override
     public List<CandidateXTechnology> listCandidatesXTec() {
-        return null;
+        return candidateXTechnologyRepository.findAll();
     }
 }

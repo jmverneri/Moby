@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "/api/technology")
 public class TechnologyController {
     private ITechnologyService iTechnologyService;
 
@@ -49,20 +50,9 @@ public class TechnologyController {
     @PutMapping("/update-technology/{id}")
     public Technology updateTechnology(@PathVariable("id") Long id, @RequestBody Map<String, String> body){
         Technology current = iTechnologyService.fetchTechnologyById(id);
-        current.getName(body.get("tecName"));
-        current.getVersion(body.get("version"));
+        current.setName(body.get("tecName"));
+        current.setVersion(body.get("version"));
         iTechnologyService.saveTechnology(current);
         return current;
     }
-
-    /*@GetMapping("/{name}/candidates")
-    public ResponseEntity<Collection<Candidate>> listCandidatesByTec(@PathVariable("name") String techName){
-        Technology technology = iTechnologyService.fetchTechnologyByName(techName);
-        if(technology != null){
-            return new ResponseEntity<>(technology.getCandidateList(), HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-    }*/
 }

@@ -12,6 +12,6 @@ public interface ICandidateXTechnologyRepository extends JpaRepository<Candidate
     @Query(value = "SELECT cxt.id_candidate_x_tec, cxt.id_candidate, cxt.id_technology, cxt.experience"
             + " FROM candidate_x_tec cxt "
             + " INNER JOIN technologies t ON cxt.id_technology = t.id_technology"
-            + " WHERE t.tecnamre LIKE ?1", nativeQuery = true)
+            + " WHERE t.tecnamre LIKE ?", nativeQuery = true)
     List<CandidateXTechnology> findCandidatesXTecByTecName(String technologyName);
 }

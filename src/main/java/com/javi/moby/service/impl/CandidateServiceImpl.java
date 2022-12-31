@@ -1,8 +1,11 @@
 package com.javi.moby.service.impl;
 
 import com.javi.moby.entity.Candidate;
+import com.javi.moby.entity.CandidateXTechnology;
+import com.javi.moby.exception.DNIDontExistException;
 import com.javi.moby.exception.IdNotFoundException;
 import com.javi.moby.repository.ICandidateRepository;
+import com.javi.moby.repository.ICandidateXTechnologyRepository;
 import com.javi.moby.service.ICandidateService;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.util.List;
 public class CandidateServiceImpl implements ICandidateService {
 
     private ICandidateRepository candidateRepository;
+    private ICandidateXTechnologyRepository candidateXTechnologyRepository;
 
     public CandidateServiceImpl(ICandidateRepository repository) {
         this.candidateRepository = repository;
@@ -42,5 +46,20 @@ public class CandidateServiceImpl implements ICandidateService {
     public void deleteById(Long id) {
         candidateRepository.deleteById(id);
         log.info("The candidate has been successfully deleted");
+    }
+
+    @Override
+    public List<CandidateXTechnology> listCandidatesByTec(String name) {
+        return candidateXTechnologyRepository.findCandidatesXTecByTecName(name);
+    }
+
+    @Override
+    public Candidate searchCandidateByIdNumber(String dni) {
+        Candidate candidate = candidateRepository.findByIdNumber(dni);
+
+        if(candidate == null){
+            throw new DNIDontExistException();
+        }
+        return candidate;
     }
 }

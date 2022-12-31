@@ -28,7 +28,7 @@ public class Candidate {
     private String surname;
     @Column(name = "identity_type")
     private String identityType;
-    @Column(name = "id_number")
+    @Column(name = "id_number", unique= true)
     private String idNumber;
     @Column(name = "birth_date")
     @DateTimeFormat( pattern="yyyy-MM-dd")
