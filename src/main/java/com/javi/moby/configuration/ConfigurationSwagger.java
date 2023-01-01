@@ -14,7 +14,7 @@ public class ConfigurationSwagger {
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.javi.moby.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.javi.moby"))
                 .paths(PathSelectors.any())
                 .build()
                 .useDefaultResponseMessages(false);

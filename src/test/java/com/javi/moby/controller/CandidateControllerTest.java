@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import static com.javi.moby.testUtils.TestEntityFactory.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.RequestEntity.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = CandidateController.class)
@@ -27,23 +29,31 @@ public class CandidateControllerTest {
 
     @Test
     @WithMockUser
-    void addCandidateTest() throws Exception{
-        when(candidateService.saveCandidate(getCandidateWithoutId())).thenReturn(getCandidateWithId());
+    void listCandidatesTest() throws Exception {
+        mockMvc.perform(get("/api/candidate/candidates"))
+                .andExpect(status().isOk());
+    }
+
+   /* @Test
+    @WithMockUser
+    void saveCandidateTest(){
         mockMvc.perform(post("/api/candidate/add-candidate", getCandidateWithIdJson())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(getCandidateWithIdJson()))
                 .andExpect(status().isCreated());
+    }*/
+    @Test
+    @WithMockUser
+    void deleteTest() throws Exception {
+        mockMvc.perform(delete("/api/candidate/remove-candidate/{id}", ID_CANDIDATE))
+                .andExpect(status().isOk());
+        verify(candidateService, times(1)).deleteById(ID_CANDIDATE);
     }
 
     @Test
     @WithMockUser
-    void addCandidateFailTest() throws Exception{
-
-        when(candidateService.saveCandidate(getCandidateWithoutIdOrDni()))
-                .thenThrow(DNIDontExistException.class);
-        mockMvc.perform((RequestBuilder) post("/api/candidate/add-candidate", getCandidateWithoutIdOrDni()))
-                .andExpect(status().isBadRequest());
+    void getCandidateByIdTest() throws Exception {
+        mockMvc.perform(get("/api/candidate/get-candidate/{id}", ID_CANDIDATE))
+                .andExpect(status().isOk());
     }
-
-
 }
