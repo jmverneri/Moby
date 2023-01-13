@@ -1,4 +1,4 @@
-package com.javi.moby.security;
+/*package com.javi.moby.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,8 @@ public class WebSecurityConfig {
         return http
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2/**"))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/h2/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/h2/**",
+                                "/api/**").permitAll()
                         .anyRequest().authenticated())
                 .headers(headers -> headers.frameOptions().sameOrigin())
                 .httpBasic()
@@ -54,4 +55,15 @@ public class WebSecurityConfig {
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-}
+
+    <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+}*/

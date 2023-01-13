@@ -1,6 +1,6 @@
 package com.javi.moby.service.impl;
 
-import com.javi.moby.entity.CandidateXTechnology;
+import com.javi.moby.entity.model.CandidateXTechnology;
 import com.javi.moby.repository.ICandidateXTechnologyRepository;
 import com.javi.moby.service.ICandidateXTecService;
 import lombok.extern.java.Log;
@@ -14,7 +14,7 @@ import java.util.List;
 public class CandidateXTecServiceImpl implements ICandidateXTecService {
 
     @Autowired
-    ICandidateXTechnologyRepository candidateXTechnologyRepository;
+    private ICandidateXTechnologyRepository candidateXTechnologyRepository;
 
     @Override
     public CandidateXTechnology saveCandidateXTec(CandidateXTechnology candidateXTechnology) {

@@ -1,7 +1,6 @@
 package com.javi.moby.serviceImpl;
 
-import com.javi.moby.entity.Candidate;
-import com.javi.moby.entity.Technology;
+import com.javi.moby.entity.model.Technology;
 import com.javi.moby.repository.ITechnologyRepository;
 import com.javi.moby.service.ITechnologyService;
 import com.javi.moby.service.impl.TechnologyServiceImpl;
@@ -17,6 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import java.util.List;
 
 import static com.javi.moby.testUtils.TestEntityFactory.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -24,36 +24,45 @@ import static org.mockito.Mockito.*;
 public class TechnologyServiceImplTest {
 
     @InjectMocks
-    TechnologyServiceImpl technologyServiceImpl;
+    private TechnologyServiceImpl underTest;
 
     @Mock
-    ITechnologyRepository technologyRepository;
+    private ITechnologyRepository technologyRepository;
 
     @MockBean
-    ITechnologyService technologyService;
+    private ITechnologyService technologyService;
 
     @Test
     @WithMockUser
     void saveTechnologyTest(){
-        Technology technology = technologyServiceImpl.saveTechnology(getTechnologyWithoutId());
+        //given
+        Technology technology = getTechnologyWithoutId();
 
-        assertEquals(getTechnologyWithId(), technology);
+        //when
+        underTest.saveTechnology(technology);
+
+        //then
+        ArgumentCaptor<Technology> technologyArgumentCaptor = ArgumentCaptor.forClass(Technology.class);
+
+        verify(technologyRepository).save(technologyArgumentCaptor.capture());
+
+        Technology capturedTechnology = technologyArgumentCaptor.getValue();
+
+        assertThat(capturedTechnology).isEqualTo(technology);
     }
 
     @Test
-    @WithMockUser
     void listTechnologiesTest(){
         when(technologyRepository.findAll()).thenReturn(getTechnologyList());
 
-        List<Technology> list = technologyServiceImpl.listTechnologies();
+        List<Technology> list = underTest.listTechnologies();
 
         assertEquals(getTechnologyList(), list);
     }
 
     @Test
-    @WithMockUser
     void deleteByIdTest(){
-        technologyServiceImpl.deleteById(ID_TECHNOLOGY);
+        underTest.deleteById(ID_TECHNOLOGY);
         verify(technologyRepository, times(1)).deleteById(ID_TECHNOLOGY);
     }
 }

@@ -1,10 +1,11 @@
 package com.javi.moby.service.impl;
 
-import com.javi.moby.entity.Technology;
+import com.javi.moby.entity.model.Technology;
 import com.javi.moby.exception.TechnologyAlreadyExistsException;
 import com.javi.moby.repository.ITechnologyRepository;
 import com.javi.moby.service.ITechnologyService;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +14,8 @@ import java.util.List;
 @Service
 public class TechnologyServiceImpl implements ITechnologyService {
 
+    @Autowired
     private ITechnologyRepository repository;
-
-    public TechnologyServiceImpl(ITechnologyRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public Technology fetchTechnologyById(Long id) {

@@ -1,9 +1,9 @@
 package com.javi.moby.testUtils;
 
 import com.google.gson.Gson;
-import com.javi.moby.entity.Candidate;
-import com.javi.moby.entity.CandidateXTechnology;
-import com.javi.moby.entity.Technology;
+import com.javi.moby.entity.model.Candidate;
+import com.javi.moby.entity.model.CandidateXTechnology;
+import com.javi.moby.entity.model.Technology;
 
 import java.util.LinkedList;
 import java.util.List;

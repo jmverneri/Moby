@@ -1,4 +1,4 @@
-package com.javi.moby.entity;
+package com.javi.moby.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

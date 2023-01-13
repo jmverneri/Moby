@@ -1,9 +1,7 @@
 package com.javi.moby.controller;
 
-import com.javi.moby.entity.Candidate;
-import com.javi.moby.entity.CandidateXTechnology;
+import com.javi.moby.entity.model.CandidateXTechnology;
 import com.javi.moby.service.ICandidateXTecService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,12 +17,12 @@ public class CandidateXTecController {
         this.candidateXTecService = candidateXTecService;
     }
 
-    @GetMapping("/candidates-x-tec")
+    @GetMapping
     public List<CandidateXTechnology> listCandidatesXTec(){
         return candidateXTecService.listCandidatesXTec();
     }
 
-    @PostMapping("/add-candidate-x-tec")
+    @PostMapping
     public CandidateXTechnology saveCandidateXTec(@Valid @RequestBody CandidateXTechnology candidateXTechnology){
         return candidateXTecService.saveCandidateXTec(candidateXTechnology);
     }

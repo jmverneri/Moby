@@ -1,7 +1,7 @@
 package com.javi.moby.controller;
 
-import com.javi.moby.entity.Candidate;
-import com.javi.moby.entity.CandidateXTechnology;
+import com.javi.moby.entity.model.Candidate;
+import com.javi.moby.entity.model.CandidateXTechnology;
 import com.javi.moby.service.ICandidateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,22 +22,22 @@ public class CandidateController {
         this.candidateService = iCandidateService;
     }
 
-    @GetMapping("candidates")
+    @GetMapping
     public List<Candidate> listCandidates(){
         return candidateService.listCandidates();
     }
 
-    @PostMapping("/add-candidate")
+    @PostMapping
     public Candidate saveCandidate(@Valid @RequestBody Candidate candidate){
         return candidateService.saveCandidate(candidate);
     }
 
-    @GetMapping("/get-candidate/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Candidate> getCandidateById(@PathVariable("id") Long id){
         return new ResponseEntity<Candidate>(candidateService.fetchCandidateById(id), HttpStatus.OK);
     }
 
-    @DeleteMapping("/remove-candidate/{id}")
+    @DeleteMapping("/{id}")
     public boolean delete(@PathVariable("id") Long id){
         if(!candidateService.fetchCandidateById(id).equals(Optional.empty())){
             candidateService.deleteById(id);
@@ -46,7 +46,7 @@ public class CandidateController {
         return false;
     }
 
-    @PutMapping("/update-candidate/{id}")
+    @PutMapping("/{id}")
     public Candidate updateCandidate(@PathVariable("id") Long id, @RequestBody Map<String, String> body){
         Candidate current = candidateService.fetchCandidateById(id);
         current.setFirstName(body.get("firstName"));

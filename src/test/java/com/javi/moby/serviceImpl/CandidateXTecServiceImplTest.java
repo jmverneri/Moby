@@ -1,44 +1,55 @@
 package com.javi.moby.serviceImpl;
 
-import com.javi.moby.entity.CandidateXTechnology;
-import com.javi.moby.entity.Technology;
+import com.javi.moby.entity.model.CandidateXTechnology;
 import com.javi.moby.repository.ICandidateXTechnologyRepository;
-import com.javi.moby.repository.ITechnologyRepository;
 import com.javi.moby.service.ICandidateXTecService;
-import com.javi.moby.service.ITechnologyService;
 import com.javi.moby.service.impl.CandidateXTecServiceImpl;
-import com.javi.moby.service.impl.TechnologyServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.List;
 
 import static com.javi.moby.testUtils.TestEntityFactory.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(controllers = CandidateXTecServiceImplTest.class)
+@ExtendWith(MockitoExtension.class)
 public class CandidateXTecServiceImplTest {
     @InjectMocks
-    CandidateXTecServiceImpl candidateXTecServiceImpl;
+    private CandidateXTecServiceImpl underTest;
 
     @Mock
-    ICandidateXTechnologyRepository candidateXTechnologyRepository;
+    private ICandidateXTechnologyRepository candidateXTechnologyRepository;
 
-    @MockBean
-    ICandidateXTecService candidateXTecService;
+    @Mock
+    private ICandidateXTecService candidateXTecService;
 
     @Test
-    @WithMockUser
     void saveTechnologyTest(){
-        CandidateXTechnology candidateXTechnology = candidateXTecServiceImpl
-                .saveCandidateXTec(getCandidateXTechnology());
+        //given
+        CandidateXTechnology candidateXTechnology = getCandidateXTechnology();
 
-        assertEquals(getCandidateXTechnology(), candidateXTechnology);
+        //when
+        underTest.saveCandidateXTec(candidateXTechnology);
+
+        //then
+        ArgumentCaptor<CandidateXTechnology> technologyArgumentCaptor =
+                ArgumentCaptor.forClass(CandidateXTechnology.class);
+
+        verify(candidateXTechnologyRepository).save(technologyArgumentCaptor.capture());
+
+        CandidateXTechnology capturedCandidateXTechnology = technologyArgumentCaptor.getValue();
+
+        assertThat(capturedCandidateXTechnology).isEqualTo(candidateXTechnology);
     }
 
     @Test
@@ -46,7 +57,7 @@ public class CandidateXTecServiceImplTest {
     void listTechnologiesTest(){
         when(candidateXTechnologyRepository.findAll()).thenReturn(getCandidateXTechnologyList());
 
-        List<CandidateXTechnology> list = candidateXTecServiceImpl.listCandidatesXTec();
+        List<CandidateXTechnology> list = underTest.listCandidatesXTec();
 
         assertEquals(getCandidateXTechnologyList(), list);
     }

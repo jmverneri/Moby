@@ -1,7 +1,6 @@
 package com.javi.moby.service;
 
-import com.javi.moby.entity.Candidate;
-import com.javi.moby.entity.Technology;
+import com.javi.moby.entity.model.Technology;
 
 import java.util.List;
 
